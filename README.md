@@ -100,7 +100,6 @@ serve.py                       Waitress production server entry point
 templates/index.html           Website structure
 static/styles.css              Responsive visual design
 static/app.js                  Browser interactions and result rendering
-app.py                         Earlier Streamlit prototype
 src/analyzer.py                Rule-based analysis and explanations
 src/ml_model.py                SMS model scoring and clues
 src/url_model.py               URL features, model scoring, and clues
@@ -109,7 +108,6 @@ train_url_model.py             Host-disjoint URL training and evaluation
 render.yaml                    Render service configuration
 models/*.json                  Small pre-trained model files
 reports/                       Metrics and defanged URL error analysis
-data/raw/                      Downloaded datasets (Git-ignored)
 ```
 
 ## Resume summary
