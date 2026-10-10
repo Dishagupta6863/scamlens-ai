@@ -1,0 +1,26 @@
+{
+  "dataset": "UCI PhiUSIIL Phishing URL (Website)",
+  "unique_urls": 235370,
+  "train_examples": 188296,
+  "test_examples": 47074,
+  "random_state": 42,
+  "split": "stratified 80/20 random URL holdout after case-insensitive URL deduplication; host overlap is allowed",
+  "accuracy": 0.9309,
+  "phishing_precision": 0.9712,
+  "phishing_recall": 0.8638,
+  "phishing_f1": 0.9144,
+  "confusion_matrix_labels": [
+    "legitimate",
+    "phishing"
+  ],
+  "confusion_matrix": [
+    [
+      26455,
+      515
+    ],
+    [
+      2738,
+      17366
+    ]
+  ]
+}

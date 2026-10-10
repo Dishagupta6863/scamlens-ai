@@ -1,0 +1,31 @@
+{
+  "dataset": "UCI SMS Spam Collection",
+  "dataset_url": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+  "dataset_license": "CC BY 4.0",
+  "scope_note": "English SMS spam classification; this is a baseline proxy, not a general scam detector.",
+  "deduplicated_examples": 5159,
+  "train_examples": 4128,
+  "test_examples": 1031,
+  "random_state": 42,
+  "split": "stratified 80/20 holdout after case-insensitive exact-text deduplication",
+  "feature_method": "word unigrams and adjacent bigrams; tokens seen in at least two training messages",
+  "classifier": "multinomial Naive Bayes with Laplace smoothing (alpha=1)",
+  "accuracy": 0.9884,
+  "spam_precision": 0.9677,
+  "spam_recall": 0.9375,
+  "spam_f1": 0.9524,
+  "confusion_matrix_labels": [
+    "ham",
+    "spam"
+  ],
+  "confusion_matrix": [
+    [
+      899,
+      4
+    ],
+    [
+      8,
+      120
+    ]
+  ]
+}

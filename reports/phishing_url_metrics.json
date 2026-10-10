@@ -1,0 +1,59 @@
+{
+  "dataset": "UCI PhiUSIIL Phishing URL (Website)",
+  "dataset_url": "https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+website+dataset",
+  "dataset_license": "CC BY 4.0",
+  "scope_note": "Uses URL-text features only; the source dataset also contains webpage-derived fields that this model does not use.",
+  "unique_urls": 235370,
+  "train_examples": 164759,
+  "validation_examples": 35306,
+  "test_examples": 35305,
+  "train_hosts": 152111,
+  "validation_hosts": 33851,
+  "test_hosts": 33132,
+  "host_overlap": 0,
+  "random_state": 42,
+  "split": "deterministic approximately 70/15/15 host-grouped train/validation/test split after case-insensitive URL deduplication; www-prefixed hosts are normalized together",
+  "threshold_selection": "maximize phishing F1 on validation; ties broken by recall then precision",
+  "decision_threshold": 0.607903,
+  "validation_metrics_at_selected_threshold": {
+    "accuracy": 0.9285,
+    "phishing_precision": 0.9759,
+    "phishing_recall": 0.8536,
+    "phishing_f1": 0.9106,
+    "confusion_matrix_labels": [
+      "legitimate",
+      "phishing"
+    ],
+    "confusion_matrix": [
+      [
+        19910,
+        318
+      ],
+      [
+        2208,
+        12870
+      ]
+    ]
+  },
+  "split_limitation": "Grouping uses normalized hostnames, not a complete public-suffix list; sibling subdomains may remain in different groups. The dataset has no collection timestamp, so temporal evaluation is unavailable.",
+  "features": "URL length, scheme, IP host, subdomain depth, hyphens, @ symbol, shortener, query, path depth, sensitive terms, digits, encoding, symbols, and punycode",
+  "classifier": "categorical Naive Bayes with Laplace smoothing (alpha=1)",
+  "accuracy": 0.9312,
+  "phishing_precision": 0.972,
+  "phishing_recall": 0.8638,
+  "phishing_f1": 0.9147,
+  "confusion_matrix_labels": [
+    "legitimate",
+    "phishing"
+  ],
+  "confusion_matrix": [
+    [
+      19852,
+      375
+    ],
+    [
+      2053,
+      13025
+    ]
+  ]
+}

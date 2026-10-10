@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f9fc">
+    <meta name="description" content="ScamLens is an explainable first-pass scam risk check for suspicious messages and links.">
+    <title>ScamLens AI — Check the signals</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="ScamLens home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 3.5 27 8v7.6c0 6.2-4.3 10.4-11 13-6.7-2.6-11-6.8-11-13V8l11-4.5Z" stroke="currentColor" stroke-width="2"/><path d="M10.2 16c1.6-2.3 3.5-3.4 5.8-3.4s4.2 1.1 5.8 3.4c-1.6 2.3-3.5 3.4-5.8 3.4s-4.2-1.1-5.8-3.4Z" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="16" r="1.7" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-name">ScamLens<span class="brand-ai">AI</span></span>
+      </a>
+      <div class="topbar-right"><span class="status-dot"></span> No scan history stored <span class="topbar-divider">·</span> Prototype</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-line"></span> PAUSE. CHECK. THEN ACT.</div>
+        <h1>Not sure about that message?<br><span>Look closer.</span></h1>
+        <p class="hero-copy">Check a suspicious message or link. ScamLens explains the warning signs so you can make a more informed decision.</p>
+        <div class="trust-points">
+          <span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 16.5 5v4.6c0 3.7-2.6 6.2-6.5 7.9-3.9-1.7-6.5-4.2-6.5-7.9V5L10 2.5Z"/><path d="m7 9.8 2 2 4-4"/></svg>No external AI API</span>
+          <span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10s2.5-4 7-4 7 4 7 4-2.5 4-7 4-7-4-7-4Z"/><circle cx="10" cy="10" r="1.8"/><path d="m4 16 12-12"/></svg>Links are never opened</span>
+          <span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5h10v13H5zM7.5 7h5M7.5 10h5M7.5 13h3"/></svg>Clear explanations</span>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Scam risk checker">
+        <div class="workspace-heading">
+          <div><span class="section-kicker">SCAM CHECKER</span><h2>What would you like to inspect?</h2></div>
+          <span class="input-limit">Up to 5,000 characters</span>
+        </div>
+
+        <div class="mode-switch" role="tablist" aria-label="Analysis type">
+          <button class="mode-tab active" id="message-tab" role="tab" aria-selected="true" aria-controls="scan-panel" data-mode="message">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.2 4.5h13.6v9H9l-4.2 3v-3H3.2v-9Z"/><path d="M6.5 7.5h7M6.5 10.5h4"/></svg>Message
+          </button>
+          <button class="mode-tab" id="url-tab" role="tab" aria-selected="false" aria-controls="scan-panel" data-mode="url">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 12 6.6 13.4a3 3 0 0 1-4.2-4.2l3-3a3 3 0 0 1 4.2 0"/><path d="m12 8 1.4-1.4a3 3 0 0 1 4.2 4.2l-3 3a3 3 0 0 1-4.2 0"/><path d="m7.5 12.5 5-5"/></svg>Link / URL
+          </button>
+        </div>
+
+        <div id="scan-panel" role="tabpanel" aria-labelledby="message-tab">
+          <label class="input-label" for="scan-content" id="input-label">Paste the message you received</label>
+          <textarea id="scan-content" maxlength="5000" placeholder="Example: Your account will be suspended immediately. Verify your details at…" spellcheck="false"></textarea>
+          <div class="input-meta"><span id="input-hint">Include the full message for more context.</span><span id="char-count">0 / 5,000</span></div>
+          <div class="form-actions">
+            <button class="sample-button" id="sample-button" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14"/></svg>Try a sample</button>
+            <button class="analyze-button" id="analyze-button" type="button"><span>Analyze signals</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4l6 6-6 6"/></svg></button>
+          </div>
+          <p class="error-message" id="error-message" role="alert" hidden></p>
+        </div>
+
+        <section class="result-card" id="result-card" aria-live="polite" hidden>
+          <div class="result-topline"><span class="section-kicker">ANALYSIS COMPLETE</span><button class="reset-button" id="reset-button" type="button">Clear result</button></div>
+          <div class="result-overview">
+            <div class="score-ring" id="score-ring"><div class="score-ring-inner"><strong id="risk-score">0</strong><span>/ 100</span></div></div>
+            <div class="result-copy"><span class="result-label" id="risk-label">Risk assessment</span><h3 id="risk-summary"></h3><p>Rule-based risk score</p></div>
+          </div>
+          <div class="model-score" id="model-score" hidden></div>
+          <div class="signals-block" id="signals-block">
+            <h4><span class="signal-icon">!</span> Signals to review</h4>
+            <ul class="signal-list" id="signal-list"></ul>
+          </div>
+          <div class="safe-next-step"><div class="next-icon" aria-hidden="true">↗</div><div><h4>Suggested next step</h4><p id="risk-advice"></p></div></div>
+          <p class="result-disclaimer">This is an early-warning aid, not a verdict. A low score cannot prove a message or link is safe.</p>
+        </section>
+      </section>
+
+      <section class="how-it-works">
+        <div class="how-heading"><span class="section-kicker">BUILT FOR CLARITY</span><h2>Understand the why, not just a score.</h2></div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="feature-number">01</span><h3>Transparent checks</h3><p>See the specific wording or URL characteristics that triggered a warning.</p></article>
+          <article class="feature-card"><span class="feature-number">02</span><h3>Separate model signals</h3><p>Rule scores and dataset-trained model scores are shown separately and explained.</p></article>
+          <article class="feature-card"><span class="feature-number">03</span><h3>Safer next steps</h3><p>Get practical reminders to verify a request through an independently trusted channel.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span>© 2026 ScamLens AI · Educational prototype</span><span>Cloud demo inputs reach the app server. Never paste credentials or private messages.</span></footer>
+  </body>
+</html>
