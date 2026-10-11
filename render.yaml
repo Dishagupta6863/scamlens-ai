@@ -1,6 +1,7 @@
 services:
   - type: web
     name: scamlens-ai
+    plan: free
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: python serve.py
